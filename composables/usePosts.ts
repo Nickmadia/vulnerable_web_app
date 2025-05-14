@@ -8,13 +8,6 @@ export const usePosts = () => {
     posts.value = await $fetch('/api/posts')
   }
 
-  const addPost = async (title: string, content: string) => {
-    await $fetch('/api/posts', {
-      method: 'POST',
-      body: { title, content }
-    })
-    await fetchPosts()
-  }
 
-  return { posts, fetchPosts, addPost }
+  return { posts, fetchPosts }
 }

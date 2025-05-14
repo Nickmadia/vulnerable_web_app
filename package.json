@@ -12,6 +12,8 @@
   "dependencies": {
     "bootstrap": "^5.3.6",
     "nuxt": "^3.17.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "vue": "^3.5.13",
     "vue-router": "^4.5.1"
   }
