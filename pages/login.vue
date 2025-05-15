@@ -29,7 +29,7 @@
             Log in
           </button>
         </form>
-        <p class="text-center mt-3 text-muted">Don't have an account? <a href="#" class="text-decoration-none">Register</a></p>
+        <p class="text-center mt-3 text-muted">Don't have an account? <a href="/register" class="text-decoration-none">Register</a></p>
       </div>
     </div>
   </template>

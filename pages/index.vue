@@ -4,16 +4,11 @@
     <div class="container py-5">
       <h2 class="text-center mb-5">Latest Posts</h2>
 
-      <!-- Loading State -->
-      <div v-if="this.loading" class="text-center">Loading posts...</div>
+  
 
       <!-- Error State -->
-      <div v-else-if="this.error" class="text-center text-danger">
-        <p>{{ error }}</p>
-      </div>
-
-      <!-- Post Grid -->
-      <div v-else class="row g-4 justify-content-center">
+          <!-- Post Grid -->
+      <div  class="row g-4 justify-content-center">
         <div class="col-md-6 col-lg-6" v-for="post in posts" :key="post.id">
           <PostCard :post="post" />
         </div>
