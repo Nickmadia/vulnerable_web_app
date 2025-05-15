@@ -5,7 +5,7 @@ export const usePosts = () => {
   const posts = useState<Post[]>('posts', () => [])
 
   const fetchPosts = async () => {
-    posts.value = await $fetch('/api/posts')
+    posts.value = await $fetch('/api/posts/')
   }
 
 
