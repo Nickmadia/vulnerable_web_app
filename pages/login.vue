@@ -4,14 +4,14 @@
         <h2 class="text-center mb-4 text-primary">Login</h2>
         <form @submit.prevent="handleLogin">
           <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
+            <label for="username" class="form-label">Username</label>
             <input
-              type="email"
+              type="username"
               class="form-control"
-              id="email"
-              v-model="email"
+              id="username"
+              v-model="username"
               required
-              placeholder="you@example.com"
+              placeholder="username"
             />
           </div>
           <div class="mb-4">
@@ -28,27 +28,60 @@
           <button type="submit" class="btn btn-primary w-100 py-2">
             Log in
           </button>
+          <!-- Error / Success Alerts -->
+      <BaseAlert v-if="errorMessage" type="danger" :message="errorMessage" />
+      <BaseAlert v-if="successMessage" type="success" :message="successMessage" />
         </form>
         <p class="text-center mt-3 text-muted">Don't have an account? <a href="/register" class="text-decoration-none">Register</a></p>
       </div>
     </div>
   </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: ''
+<script>
+import { useAuth } from '@/composables/useAuth'
+import { onMounted } from 'vue'
+import { errorMessages } from 'vue/compiler-sfc'
+
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      error: '',
+      errorMessage : '',
+      successMessage : '',  
+    }
+  },
+  methods: {
+    async handleLogin() {
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: this.username, password: this.password })
+        })
+        const data = await res.json()
+        console.log(data)
+        if (!res.ok) throw new Error(data.statusMessage || 'Registration failed')
+        const { setAuth } = useAuth()
+        setAuth(data)
+        this.successMessage = 'Login successful!'
+        setTimeout( () => {
+          this.$router.push("/")
+
+        }, 1000
+      )
+      } catch (error) {
+
+        this.errorMessage = error.message 
       }
     },
-    methods: {
-      handleLogin() {
-        console.log('Email:', this.email)
-        console.log('Password:', this.password)
-        // Add your login logic here
-      }
+    setup() {
+      onMounted(() => {
+  if (loggedIn.value) router.push('/')
+})
     }
   }
-  </script>
-  
+}
+</script>

@@ -4,7 +4,8 @@
     <div class="card-body p-4">
       <h5 class="card-title fs-3 fw-semibold text-primary mb-3">{{ post.title }}</h5>
       <p class="card-text text-secondary fs-5">{{ post.content }}</p>
-      <a :href="/posts/ + post.id" class="btn btn-primary mt-3 px-4 py-2">Read more</a>
+      <NuxtLink :to="`/posts/${post.id}`">Open Post</NuxtLink>
+
     </div>
   </div>
 </template>

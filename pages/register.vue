@@ -17,29 +17,54 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">Register</button>
           </form>
+          <BaseAlert v-if="errorMessage" type="danger" :message="errorMessage" />
+          <BaseAlert v-if="successMessage" type="success" :message="successMessage" />
           <p class="mt-3 text-center">Already have an account? <NuxtLink to="/login" class="text-decoration-none">Login here</NuxtLink></p>
+
+            <!-- Error / Success Alerts -->
         </div>
       </div>
   </template>
   
-  <script setup>
-  import { ref } from 'vue'
-  
-  const username = ref('')
-
-  const password = ref('')
-  const confirmPassword = ref('')
-  
-  const handleRegister = () => {
-    // Here you will handle the registration logic, such as calling an API to create the user.
-    if (password.value !== confirmPassword.value) {
-      alert('Passwords do not match!')
-      return
+ <script>
+ import BaseAlert from '@/components/BaseAlert.vue'
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+      successMessage: '',
+      errorMessage: ''
     }
-  
-    // For now, just logging the registration data
-    console.log({ username: username.value, email: email.value, password: password.value })
-    // TODO call API and make api to register 
+  },
+  methods: {
+    async handleRegister() {
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: this.username, password: this.password })
+        })
+
+        const data = await res.json()
+        if (!res.ok) throw new Error(data.statusMessage || 'Registration failed')
+
+        this.successMessage = 'Registration successful. You can now log in.'
+        this.errorMessage = ''
+        this.username = ''
+        this.password = ''
+        setTimeout( () => {
+          this.$router.push("/login")
+
+        }, 1000
+      )
+      } catch (err) {
+        this.errorMessage = err.message
+        console.error(err)
+      }
+    }
   }
-  </script>
+}
+</script>
+
   
