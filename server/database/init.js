@@ -27,8 +27,8 @@ export async function initDB() {
     await db.run(`
       INSERT INTO users (username, password)
       VALUES (?, ?)
-    `, ['admin', 'admin']) // ⚠️ Use hashed password in production!
-    console.log('🧪 Inserted test user: admin / admin')
+    `, ['admin', 'admin']) 
+  
   }
 // Seed posts if in dev mode
 if (process.env.NODE_ENV === 'development') {
