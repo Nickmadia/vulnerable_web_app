@@ -54,7 +54,7 @@
           aria-label="Close post form"
         >×</button>
 
-        <PostForm />
+        <PostForm @post-created="handlePostCreated"/>
       </div>
     </div>
 

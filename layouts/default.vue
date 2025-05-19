@@ -39,7 +39,6 @@
                 </button>
               </li>
             </template>
-            <button @click="test">ciaaoo </button>
           </ul>
         </div>
       </div>
@@ -75,6 +74,7 @@ export default {
     test() {
       console.log(useAuth().loggedIn.value)
       console.log(useAuth().username.value)
+      console.log(useAuth().loadAuthFromStorage())
     }
   }
 }

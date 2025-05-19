@@ -21,16 +21,20 @@ export const useAuth = () => {
   const loadAuthFromStorage = () => {
     return localStorage.getItem('auth')
   }
+  
+  const loadUsernameFromStorage = () => {
+    return localStorage.getItem('username')
+  }
 
   const logout = () => {
     loggedIn.value = false
     username.value = null
     token.value = null
     localStorage.removeItem('auth')
-    localStorage.removeItem('auth')
+    localStorage.removeItem('username')
   }
 // Rehydrate on page load
-  if (process.client && !loggedIn.value) {
+  /* if (process.client && !loggedIn.value) {
     const saved = localStorage.getItem('auth')
     const uname = localStorage.getItem('username')
     if (saved) {
@@ -38,7 +42,7 @@ export const useAuth = () => {
       username.value = uname.username 
       token.value = saved.token
     }
-  }
+  } */
   return {
     loggedIn,
     username,

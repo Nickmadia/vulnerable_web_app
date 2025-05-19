@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { useDB } from '@/server/database/db'
 import { hashPassword } from '@/server/utils/hashs'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key'
+const JWT_SECRET =  'secret-key' //process.env.JWT_SECRET ||
 
 export default defineEventHandler(async (event) => {
   try {

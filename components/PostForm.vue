@@ -45,18 +45,31 @@ export default {
   methods: {
     async submit() {
       try {
+        const token = localStorage.getItem('auth') // Get JWT from storage
+        if (!token) throw new Error('User not authenticated')
+
         const res = await fetch('/api/posts', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, 
+          },
           body: JSON.stringify({
             title: this.title,
             content: this.content,
-            image: this.image || 'https://picsum.photos/600/300', // fallback image
+            // image: this.image || 'https://picsum.photos/600/300', // if supported
           }),
         })
-        if (!res.ok) throw new Error('Failed to create post')
+
+        if (!res.ok) {
+          const errData = await res.json()
+          throw new Error(errData.statusMessage || 'Failed to create post')
+        }
+
         const newPost = await res.json()
         this.$emit('post-created', newPost)
+
+        // Reset form
         this.title = ''
         this.content = ''
         this.image = ''
