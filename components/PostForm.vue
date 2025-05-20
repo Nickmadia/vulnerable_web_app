@@ -20,14 +20,7 @@
           required
         ></textarea>
       </div>
-      <div class="mb-3">
-        <input
-          v-model="image"
-          type="url"
-          class="form-control"
-          placeholder="Image URL (optional)"
-        />
-      </div>
+     
       <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
   </div>

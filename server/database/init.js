@@ -22,13 +22,14 @@ export async function initDB() {
     );
   `)
 
-  // Optional: insert a test user if none exists
+  // insert a test user if none exists
+  // admin username is the only admin of the blog
   const existing = await db.get(`SELECT COUNT(*) as count FROM users`)
   if (existing.count === 0) {
     await db.run(`
       INSERT INTO users (username, password)
       VALUES (?, ?)
-    `, ['admin', hashPassword('admin')]) 
+    `, ['admin', hashPassword('admin')])// need to change this pass 
   
   }
 // Seed posts if in dev mode

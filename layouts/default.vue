@@ -66,6 +66,7 @@ export default {
   methods: {
     handleLogout() {
       useAuth().logout()
+      this.$router.push('/')
     },
     test() {
       console.log(useAuth().loggedIn.value)
