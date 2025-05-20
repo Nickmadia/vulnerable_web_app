@@ -4,16 +4,8 @@
       <div class="container-fluid">
         <NuxtLink to="/" class="navbar-brand">MyBlog</NuxtLink>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navContent"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navContent">
+        <div  id="navContent">
           <ul class="navbar-nav ms-auto">
 
             <li class="nav-item">
@@ -33,7 +25,8 @@
             <!-- Logged In -->
             <template v-else>
               <li class="nav-item d-flex align-items-center">
-                <span class="nav-link text-white fw-bold me-2">{{ username}}</span>
+                <NuxtLink to="/admin" v-if="isAdmin" class="nav-link">Admin Panel</NuxtLink>
+                <span class="nav-link text-white fw-bold me-2" >{{ username}}</span>
                 <button class="btn btn-outline-light btn-sm" @click="handleLogout">
                   Logout
                 </button>
@@ -65,6 +58,9 @@ export default {
     },
     username() {
       return useAuth().username?.value || ''
+    },
+    isAdmin(){
+      return useAuth().isAdmin() 
     }
   },
   methods: {
@@ -74,6 +70,7 @@ export default {
     test() {
       console.log(useAuth().loggedIn.value)
       console.log(useAuth().username.value)
+      console.log(useAuth().isAdmin())
       console.log(useAuth().loadAuthFromStorage())
     }
   }

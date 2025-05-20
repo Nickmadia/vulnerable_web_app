@@ -18,6 +18,9 @@ export const useAuth = () => {
     }
   }
 
+  const isAdmin = () => {
+    return username.value === 'admin'
+  }
   const loadAuthFromStorage = () => {
     return localStorage.getItem('auth')
   }
@@ -50,5 +53,6 @@ export const useAuth = () => {
     setAuth,
     loadAuthFromStorage,
     logout,
+    isAdmin,
   }
 }

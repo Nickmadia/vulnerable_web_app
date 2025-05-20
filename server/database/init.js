@@ -1,4 +1,5 @@
 import { useDB } from './db.js'
+import {hashPassword} from './../utils/hashs.js'
 
 export async function initDB() {
   const db = await useDB()
@@ -27,7 +28,7 @@ export async function initDB() {
     await db.run(`
       INSERT INTO users (username, password)
       VALUES (?, ?)
-    `, ['admin', 'admin']) 
+    `, ['admin', hashPassword('admin')]) 
   
   }
 // Seed posts if in dev mode
