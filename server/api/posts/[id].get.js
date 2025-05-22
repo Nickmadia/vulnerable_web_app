@@ -1,10 +1,9 @@
 import { useDB } from '@/server/database/db'
 import jwt from 'jsonwebtoken'
 
-const SECRET = process.env.JWT_SECRET || 'default_secret'
 
 export default defineEventHandler (async (event) => {
-   let { id } = event.context.params
+  let { id } = event.context.params
 
   if (!id || isNaN(parseInt(id))) {
     return sendError(event, createError({ statusCode: 400, statusMessage: 'Invalid post ID' }))
@@ -34,11 +33,9 @@ export default defineEventHandler (async (event) => {
       })
     }) */
 
-    //sqlinj vuln
     id = decodeURIComponent(id)
     const query = `SELECT * FROM posts WHERE id = ${id}` 
-    const post = await db.get(query) // since the method uses GET it will return only the first line, in order to abuse the sqlinj the id must be 
-    // non existent so it will return the second first value which can be controlled with the injected query, url encoding must be used
+    const post = await db.get(query) 
     if (!post) {
       return sendError(event, createError({ statusCode: 404, statusMessage: 'Post not found' }))
     }

@@ -2,9 +2,10 @@ import jwt from 'jsonwebtoken'
 import { useDB } from '@/server/database/db'
 import { hashPassword } from '@/server/utils/hashs'
 
-const JWT_SECRET =  'secret-key' //process.env.JWT_SECRET ||
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const jwtSecret = config.jwtSecret
   try {
     const { username, password } = await readBody(event)
 
@@ -24,7 +25,7 @@ export default defineEventHandler(async (event) => {
       return sendError(event, createError({ statusCode: 401, statusMessage: 'Invalid credentials.' }))
     }
 
-    const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ id: user.id, username: user.username }, jwtSecret, { expiresIn: '1h' })
 
     return {
       username: user.username,

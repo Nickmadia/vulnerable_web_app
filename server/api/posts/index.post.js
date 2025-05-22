@@ -2,9 +2,10 @@ import { useDB } from '@/server/database/db'
 
 import jwt from 'jsonwebtoken'
 
-const SECRET_KEY = 'secret-key' // ideally from runtime config
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const jwtSecret = config.jwtSecret
   try {
     // 🔐 Get token from Authorization header
     const authHeader = getHeader(event, 'authorization')
@@ -20,7 +21,7 @@ export default defineEventHandler(async (event) => {
     // ✅ Verify JWT
     let decoded
     try {
-      decoded = jwt.verify(token, SECRET_KEY)
+      decoded = jwt.verify(token, jwtSecret)
     } catch (err) {
       throw createError({
         statusCode: 401,
@@ -28,7 +29,6 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // 🧠 You now have access to decoded user info
     const body = await readBody(event)
     const { title, content } = body
 

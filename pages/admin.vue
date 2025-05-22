@@ -8,10 +8,8 @@
     <option>uptime</option>
     <option>free -m</option>
     <option>df -h</option>
-    <option>printenv</option>
     <option>ps aux</option>
     <option>who</option>
-    <option>lsof -i</option>
   </select>
     <button class="btn btn-primary mt-2" @click="runDiagnostic" :disabled="loading">
       {{ loading ? 'Running...' : 'Run Diagnostic' }}

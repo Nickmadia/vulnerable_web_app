@@ -5,6 +5,8 @@ import { promisify } from 'util'
 const execAsync = promisify(exec)
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const jwtSecret = config.jwtSecret
   const token = getHeader(event, 'authorization')?.replace('Bearer ', '')
 
   if (!token) {
@@ -12,7 +14,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'secret-key') // Replace with your secret
+    const decoded = jwt.verify(token, jwtSecret) 
 
     if (decoded.id !== 1) {
         console.log(decoded )

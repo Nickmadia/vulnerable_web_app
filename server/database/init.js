@@ -29,11 +29,9 @@ export async function initDB() {
     await db.run(`
       INSERT INTO users (username, password)
       VALUES (?, ?)
-    `, ['admin', hashPassword('admin')])// need to change this pass 
+    `, ['admin', hashPassword('admin123')])// need to change this pass 
   
   }
-// Seed posts if in dev mode
-if (process.env.NODE_ENV === 'development') {
     const postCount = await db.get(`SELECT COUNT(*) as count FROM posts`)
     if (postCount.count === 0) {
       const posts = [
@@ -76,7 +74,6 @@ if (process.env.NODE_ENV === 'development') {
       }
       console.log('🧪 Inserted 4 test posts.')
     }
-}
   await db.close()
   console.log('✅ Database schema initialized.')
 }
